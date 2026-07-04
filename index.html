@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta property="og:title" content="Quiniela Mundial 2026 — 16avos de Final">
+<meta property="og:title" content="Quiniela Mundial 2026 — Octavos de Final">
 <meta property="og:description" content="Registra tus pronósticos y compite con tus amigos">
-<meta property="og:image" content="https://deerdeer348348-hash.github.io/8vos/og-mundial2026.png">
+<meta property="og:image" content="https://TU-USUARIO.github.io/TU-REPO/og-mundial2026.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:type" content="website">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiniela Mundial 2026 — 16avos V2</title>
+<title>Quiniela Mundial 2026 — Octavos de Final</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -320,7 +320,7 @@ tr.yo .rn{color:var(--gold)}
 <div class="onboarding" id="onboarding" style="display:none">
   <div class="onboarding-card">
     <h2>⚽ Quiniela Mundial 2026</h2>
-    <div class="ob-sub">ELIMINATORIA · 29 Jun - 4 Jul · 16avos de Final</div>
+    <div class="ob-sub">ELIMINATORIA · 4 - 7 Jul · Octavos de Final</div>
     <div class="ob-picks">
       <div class="ob-pick L">L<span>Gana Local</span></div>
       <div class="ob-pick E">E<span>Empate</span></div>
@@ -328,7 +328,7 @@ tr.yo .rn{color:var(--gold)}
     </div>
     <div class="ob-regla">
       <div class="ob-icon">📋</div>
-      <div class="ob-text">Elige <strong>L, E o V</strong> para cada uno de los <strong>16 partidos</strong> de la eliminatoria (16avos de Final).</div>
+      <div class="ob-text">Elige <strong>L, E o V</strong> para cada uno de los <strong>8 partidos</strong> de la eliminatoria (Octavos de Final).</div>
     </div>
     <div class="ob-regla">
       <div class="ob-icon">✅</div>
@@ -340,9 +340,9 @@ tr.yo .rn{color:var(--gold)}
     </div>
     <hr class="ob-divider">
     <div class="ob-info">
-      <div class="ob-info-item"><div class="ob-val">16</div><div class="ob-lbl">Partidos</div></div>
+      <div class="ob-info-item"><div class="ob-val">8</div><div class="ob-lbl">Partidos</div></div>
       <div class="ob-info-item"><div class="ob-val">1</div><div class="ob-lbl">Punto c/acierto</div></div>
-      <div class="ob-info-item"><div class="ob-val" id="ob-fecha">29 Jun</div><div class="ob-lbl">Inicio</div></div>
+      <div class="ob-info-item"><div class="ob-val" id="ob-fecha">4 Jul</div><div class="ob-lbl">Inicio</div></div>
     </div>
     <button class="btn btn-submit" style="width:100%" onclick="cerrarOnboarding()">¡Entendido, a jugar! ⚽</button>
   </div>
@@ -358,11 +358,11 @@ tr.yo .rn{color:var(--gold)}
 <div class="header">
   <div class="header-badge">⚽ FIFA WORLD CUP 2026</div>
   <h1>QUINIELA<br>MUNDIAL</h1>
-  <p>16avos de Final · Eliminatoria · 29 Jun - 4 Jul 2026</p>
+  <p>Octavos de Final · Eliminatoria · 4 - 7 Jul 2026</p>
 </div>
 
 <div style="text-align:center">
-  <div class="online-badge"><span class="online-dot"></span>En tiempo real · Firebase</div>
+  <div class="online-badge"><span class="online-dot"></span>Sincronizado · Google Sheets</div>
 </div>
 
 <!-- STATS BAR -->
@@ -521,30 +521,28 @@ tr.yo .rn{color:var(--gold)}
   </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, onValue, update, remove }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<script>
+// ⚠️ Pega aquí la URL de tu Web App de Google Apps Script (termina en /exec)
+const API_URL = "https://script.google.com/macros/s/AKfycby_NvU4LqN6NaWb-aijquk8B-nSm6wTP8DE1y19hgKcIGhp8eIJZWAYXqnTO89A4GC6yQ/exec"";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDStqXjhw31sfsucgzSH0oIYskJ6QujQi4",
-  authDomain: "superapp-ccab3.firebaseapp.com",
-  databaseURL: "https://superapp-ccab3-default-rtdb.firebaseio.com",
-  projectId: "superapp-ccab3",
-  storageBucket: "superapp-ccab3.firebasestorage.app",
-  messagingSenderId: "26577427585",
-  appId: "1:26577427585:web:605062ad1c63fd53124180"
-};
-const app = initializeApp(firebaseConfig);
-const db  = getDatabase(app);
+async function postAction(payload){
+  const res = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" }, // evita el preflight CORS
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  if(!data.ok) throw new Error(data.error || "Error desconocido");
+  return data;
+}
 
 const WA_NUMBER  = "";
 const ADMIN_PASS = "admin2026";
 let N = 0;
-const LS_NOMBRE  = "q2026_16vos2_nombre";
-const LS_ONBOARD = "q2026_16vos2_onboard";
+const LS_NOMBRE  = "q2026_8vos_nombre";
+const LS_ONBOARD = "q2026_8vos_onboard";
 
-// Los partidos llegan desde Firebase — array dinámico
+// Los partidos llegan desde Google Sheets — array dinámico
 let allPartidos = [];
 
 let adminLogged = false;
@@ -553,11 +551,6 @@ let cachedData  = {};
 let cachedRes   = [];
 let cerrada     = false;
 let prevCount   = -1; // para detectar nuevos registros
-
-const refQ = ref(db,"quiniela_16vos2/participantes");
-const refR = ref(db,"quiniela_16vos2/resultados");
-const refC = ref(db,"quiniela_16vos2/cerrada");
-const refP = ref(db,"quiniela_16vos2/partidos");
 
 // ── ONBOARDING ───────────────────────────────────────────────
 function checkOnboarding(){
@@ -570,50 +563,54 @@ window.cerrarOnboarding = function(){
   document.getElementById("onboarding").style.display="none";
 };
 
-// ── FIREBASE LISTENERS ────────────────────────────────────────
-onValue(refQ, snap => {
-  const nuevo = snap.val() || {};
-  const newCount = Object.keys(nuevo).length;
-  // Badge de nuevo registro en admin
-  if(prevCount >= 0 && newCount > prevCount && !adminLogged){
-    const diff = newCount - prevCount;
-    const badge = document.getElementById("admin-badge");
-    badge.textContent = diff;
-    badge.classList.add("visible");
+// ── CARGA DE DATOS (Google Sheets vía Apps Script) ─────────────
+async function fetchState(){
+  try{
+    const res = await fetch(API_URL + "?t=" + Date.now());
+    const state = await res.json();
+
+    const nuevo = state.participantes || {};
+    const newCount = Object.keys(nuevo).length;
+    if(prevCount >= 0 && newCount > prevCount && !adminLogged){
+      const diff = newCount - prevCount;
+      const badge = document.getElementById("admin-badge");
+      badge.textContent = diff;
+      badge.classList.add("visible");
+    }
+    prevCount = newCount;
+    cachedData = nuevo;
+    cachedRes  = state.resultados || [];
+    cerrada    = state.cerrada === true;
+
+    const datos = state.partidos;
+    if(datos && Array.isArray(datos) && datos.length > 0){
+      allPartidos = datos;
+      N = allPartidos.length;
+      document.getElementById("prog-count").textContent = `0 / ${N}`;
+      renderPartidos();
+      document.getElementById("esperando-partidos").style.display = "none";
+    } else {
+      allPartidos = [];
+      N = 0;
+      document.getElementById("partidos").innerHTML = "";
+      document.getElementById("esperando-partidos").style.display = "flex";
+    }
+
+    aplicarEstadoCerrada();
+    renderTabla(); renderPicks(); renderSelectParticipantes(); renderStatsBar(); renderPartidosStats();
+    if(adminLogged){
+      renderAdminPanel(); renderAdminPicksStats(); renderAdminEstado(); renderAdminPartidosForm();
+      document.getElementById("admin-badge").classList.remove("visible");
+    }
+  } catch(e){
+    console.error("Error al cargar datos:", e);
+    showToast("❌ No se pudo conectar con Google Sheets","error");
+  } finally {
+    document.getElementById("loader").classList.add("hidden");
   }
-  prevCount = newCount;
-  cachedData = nuevo;
-  renderTabla(); renderPicks(); renderSelectParticipantes(); renderStatsBar();
-  if(adminLogged){ renderAdminPanel(); renderAdminPicksStats(); document.getElementById("admin-badge").classList.remove("visible"); }
-});
-onValue(refR, async snap => {
-  cachedRes = snap.val() || [];
-  await recalcularAciertos();
-  renderTabla(); renderPicks(); renderPartidosStats();
-  if(adminLogged){ renderAdminPanel(); renderAdminPicksStats(); }
-});
-onValue(refC, snap => {
-  cerrada = snap.val() === true;
-  aplicarEstadoCerrada();
-  if(adminLogged) renderAdminEstado();
-});
-onValue(refP, snap => {
-  const datos = snap.val();
-  if(datos && Array.isArray(datos) && datos.length > 0){
-    allPartidos = datos;
-    N = allPartidos.length;
-    document.getElementById("prog-count").textContent = `0 / ${N}`;
-    renderPartidos();
-    document.getElementById("esperando-partidos").style.display = "none";
-  } else {
-    allPartidos = [];
-    N = 0;
-    document.getElementById("partidos").innerHTML = "";
-    document.getElementById("esperando-partidos").style.display = "flex";
-  }
-  document.getElementById("loader").classList.add("hidden");
-  if(adminLogged){ renderAdminPartidosForm(); }
-});
+}
+fetchState();
+setInterval(fetchState, 15000); // refresco automático cada 15s
 
 // ── STATS BAR ─────────────────────────────────────────────────
 function renderStatsBar(){
@@ -637,7 +634,7 @@ window.copiarLink = function(){
   showToast("🔗 Link copiado al portapapeles","info");
 };
 window.compartirWA = function(){
-  const txt = encodeURIComponent(`⚽ Quiniela Mundial 2026 — 16avos V2\nRegistra tus pronósticos aquí:\n${window.location.href}`);
+  const txt = encodeURIComponent(`⚽ Quiniela Mundial 2026 — Octavos de Final\nRegistra tus pronósticos aquí:\n${window.location.href}`);
   window.open(`https://wa.me/?text=${txt}`,"_blank");
 };
 
@@ -758,11 +755,13 @@ function aplicarEstadoCerrada(){
 }
 window.finalizarQuiniela = async function(){
   if(!confirm("¿Finalizar la quiniela? Se bloquea para todos de inmediato."))return;
-  await set(refC,true); showToast("🔒 Quiniela finalizada","error");
+  try{ await postAction({action:"setCerrada", cerrada:true}); await fetchState(); showToast("🔒 Quiniela finalizada","error"); }
+  catch(e){ showToast("❌ Error: "+e.message,"error"); }
 };
 window.reabrirQuiniela = async function(){
   if(!confirm("¿Reabrir la quiniela?"))return;
-  await set(refC,false); showToast("🔓 Quiniela reabierta");
+  try{ await postAction({action:"setCerrada", cerrada:false}); await fetchState(); showToast("🔓 Quiniela reabierta"); }
+  catch(e){ showToast("❌ Error: "+e.message,"error"); }
 };
 function renderAdminEstado(){
   document.getElementById("estado-badge-wrap").innerHTML = cerrada
@@ -784,7 +783,7 @@ function validar(){
 }
 
 // ── GENERAR IMAGEN CANVAS (una parte) ────────────────────────
-function generarImagenParte(nombre, picks, parteFiltrada, parteNum){
+function generarImagenParte(nombre, picks, parteFiltrada, parteNum, totalPartes){
   // parteFiltrada = array de { local, visita, hora, globalIdx }
   // Una sola columna, más ancho para mejor legibilidad
   const W=700;
@@ -809,15 +808,15 @@ function generarImagenParte(nombre, picks, parteFiltrada, parteNum){
   ctx.fillStyle="#f5c842";
   ctx.font="bold 21px Arial";
   ctx.textAlign="center";
-  ctx.fillText("🏆 QUINIELA MUNDIAL 2026 — 16avos de Final",W/2,36);
+  ctx.fillText("🏆 QUINIELA MUNDIAL 2026 — Octavos de Final",W/2,36);
 
   // Nombre participante
   ctx.fillStyle="#ffffff";
   ctx.font="bold 19px Arial";
   ctx.fillText("👤 "+nombre,W/2,64);
 
-  // Etiqueta de parte (badge)
-  const badgeW=120, badgeH=26, badgeX=(W-badgeW)/2, badgeY=76;
+  // Etiqueta (badge) — solo muestra "PARTE X" si hay más de una imagen
+  const badgeW=totalPartes>1?120:150, badgeH=26, badgeX=(W-badgeW)/2, badgeY=76;
   ctx.fillStyle=parteNum===1?"rgba(245,200,66,0.18)":"rgba(59,130,246,0.18)";
   ctx.strokeStyle=parteNum===1?"#f5c842":"#3b82f6";
   ctx.lineWidth=1.5;
@@ -829,7 +828,8 @@ function generarImagenParte(nombre, picks, parteFiltrada, parteNum){
   ctx.textAlign="center";
   const rangoInicio=parteFiltrada[0].globalIdx+1;
   const rangoFin=parteFiltrada[parteFiltrada.length-1].globalIdx+1;
-  ctx.fillText(`PARTE ${parteNum}  ·  Partidos ${rangoInicio}–${rangoFin}`,W/2,badgeY+17);
+  const badgeTxt = totalPartes>1 ? `PARTE ${parteNum}  ·  Partidos ${rangoInicio}–${rangoFin}` : `${rangoFin-rangoInicio+1} PARTIDOS`;
+  ctx.fillText(badgeTxt,W/2,badgeY+17);
 
   // Línea separadora
   ctx.strokeStyle="#1e3060";
@@ -925,7 +925,7 @@ function generarImagenParte(nombre, picks, parteFiltrada, parteNum){
   ctx.fillStyle="#6b82a8";
   ctx.font="12px Arial";
   ctx.textAlign="center";
-  ctx.fillText("⚽ FIFA World Cup 2026 · Quiniela J3",W/2,H-FOOTER+20);
+  ctx.fillText("⚽ FIFA World Cup 2026 · Octavos de Final",W/2,H-FOOTER+20);
   ctx.fillStyle="#f5c842";
   ctx.font="bold 11px Arial";
   ctx.fillText(new Date().toLocaleString("es-MX",{hour12:false,day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}),W/2,H-FOOTER+36);
@@ -939,52 +939,55 @@ function generarImagenParte(nombre, picks, parteFiltrada, parteNum){
   return canvas.toDataURL("image/png");
 }
 
-// Genera las 2 partes y devuelve array [dataUrl1, dataUrl2]
+// Genera 1 o 2 imágenes según el número de partidos, y devuelve un array de dataURLs
 function generarImagenesQuiniela(nombre, picks){
-  const todosPartidos=[];
-  GRUPOS.forEach(g=>g.partidos.forEach(p=>{
-    todosPartidos.push({local:p[0],visita:p[1],hora:p[2],globalIdx:todosPartidos.length});
-  }));
-  const mitad=Math.ceil(todosPartidos.length/2); // 12
-  const parte1=todosPartidos.slice(0,mitad);
-  const parte2=todosPartidos.slice(mitad);
+  const todosPartidos = allPartidos.map((p,i)=>({local:p.local, visita:p.visita, hora:p.hora, globalIdx:i}));
+  if(todosPartidos.length <= 10){
+    return [ generarImagenParte(nombre, picks, todosPartidos, 1, 1) ];
+  }
+  const mitad = Math.ceil(todosPartidos.length/2);
+  const parte1 = todosPartidos.slice(0,mitad);
+  const parte2 = todosPartidos.slice(mitad);
   return [
-    generarImagenParte(nombre,picks,parte1,1),
-    generarImagenParte(nombre,picks,parte2,2)
+    generarImagenParte(nombre,picks,parte1,1,2),
+    generarImagenParte(nombre,picks,parte2,2,2)
   ];
 }
 
 // ── COMPARTIR IMÁGENES POR WA (2 partes) ─────────────────────
 async function compartirImagenWA(nombre, picks){
-  const [dataUrl1, dataUrl2] = generarImagenesQuiniela(nombre, picks);
+  const dataUrls = generarImagenesQuiniela(nombre, picks);
   const nomLimpio = nombre.replace(/\s+/g,"_");
+  const files = [];
+  for(let i=0;i<dataUrls.length;i++){
+    const blob = await (await fetch(dataUrls[i])).blob();
+    const sufijo = dataUrls.length>1 ? `_parte${i+1}` : "";
+    files.push(new File([blob], `quiniela_8vos_${nomLimpio}${sufijo}.png`, {type:"image/png"}));
+  }
 
-  // Intentar Web Share API con ambos archivos (móvil)
+  // Intentar Web Share API (móvil)
   if(navigator.share && navigator.canShare){
     try{
-      const blob1=await(await fetch(dataUrl1)).blob();
-      const blob2=await(await fetch(dataUrl2)).blob();
-      const file1=new File([blob1],`quiniela_16vos2_${nomLimpio}_parte1.png`,{type:"image/png"});
-      const file2=new File([blob2],`quiniela_16vos2_${nomLimpio}_parte2.png`,{type:"image/png"});
-      if(navigator.canShare({files:[file1,file2]})){
+      if(navigator.canShare({files})){
         await navigator.share({
-          files:[file1,file2],
-          title:"Quiniela Mundial 2026 — 16avos V2",
-          text:`⚽ Mi quiniela J3 · ${nombre} (2 imágenes)`
+          files,
+          title:"Quiniela Mundial 2026 — Octavos de Final",
+          text:`⚽ Mi quiniela de Octavos · ${nombre}`
         });
         return;
       }
     }catch(e){}
   }
 
-  // Fallback: descargar ambas imágenes secuencialmente + abrir WA
-  const a1=document.createElement("a");
-  a1.href=dataUrl1; a1.download=`quiniela_16vos2_${nomLimpio}_parte1.png`; a1.click();
-  await new Promise(r=>setTimeout(r,600));
-  const a2=document.createElement("a");
-  a2.href=dataUrl2; a2.download=`quiniela_16vos2_${nomLimpio}_parte2.png`; a2.click();
+  // Fallback: descargar imagen(es) + abrir WA
+  for(let i=0;i<dataUrls.length;i++){
+    const a=document.createElement("a");
+    const sufijo = dataUrls.length>1 ? `_parte${i+1}` : "";
+    a.href=dataUrls[i]; a.download=`quiniela_8vos_${nomLimpio}${sufijo}.png`; a.click();
+    if(i<dataUrls.length-1) await new Promise(r=>setTimeout(r,600));
+  }
   setTimeout(()=>{
-    const txt=encodeURIComponent(`⚽ Quiniela Mundial 2026 — 16avos V2\n👤 ${nombre}\n\nPartidos 1–8: imagen parte 1\nPartidos 9–16: imagen parte 2`);
+    const txt=encodeURIComponent(`⚽ Quiniela Mundial 2026 — Octavos de Final\n👤 ${nombre}\n\n(imagen adjunta)`);
     window.open(WA_NUMBER?`https://wa.me/${WA_NUMBER}?text=${txt}`:`https://wa.me/?text=${txt}`,"_blank");
   },800);
 }
@@ -993,17 +996,12 @@ async function compartirImagenWA(nombre, picks){
 window.guardarQuiniela = async function(){
   const v=validar();if(!v)return;
   const key=v.nombre.replace(/[.#$\[\]/]/g,"_");
-  const prev=cachedData[key]||{};
-  let ac=0;
-  v.picks.forEach((p,i)=>{if(cachedRes[i]&&p===cachedRes[i])ac++;});
   try{
-    await set(ref(db,`quiniela_16vos2/participantes/${key}`),{
-      nombre:v.nombre,picks:v.picks,ts:Date.now(),
-      aciertos:ac,pagado:prev.pagado||false,foto:prev.foto||null,pagoTs:prev.pagoTs||null
-    });
+    await postAction({action:"guardarParticipante", key, nombre:v.nombre, picks:v.picks});
     showToast("✅ Quiniela guardada — ¡visible para todos!");
     lanzarConfetti();
     document.getElementById("fab").classList.remove("visible");
+    await fetchState();
     await compartirImagenWA(v.nombre, v.picks);
   } catch(e){ showToast("❌ Error: "+e.message,"error"); }
 };
@@ -1050,8 +1048,8 @@ window.enviarComprobanteWA=async function(){
   if(!key){showToast("⚠️ Selecciona tu nombre de la lista","error");sel.focus();return;}
   if(!fotoBase64){showToast("⚠️ Primero selecciona o toma una foto","error");return;}
   const nombre=cachedData[key]?.nombre||key;
-  try{await update(ref(db,`quiniela_16vos2/participantes/${key}`),{foto:fotoBase64});}catch(e){}
-  const txt=encodeURIComponent(`💳 Comprobante de pago\n👤 ${nombre}\n🏆 Quiniela Mundial 2026 — 16avos V2\n\n(imagen adjunta)`);
+  try{ await postAction({action:"actualizarFoto", key, foto:fotoBase64}); await fetchState(); }catch(e){}
+  const txt=encodeURIComponent(`💳 Comprobante de pago\n👤 ${nombre}\n🏆 Quiniela Mundial 2026 — Octavos de Final\n\n(imagen adjunta)`);
   window.open(WA_NUMBER?`https://wa.me/${WA_NUMBER}?text=${txt}`:`https://wa.me/?text=${txt}`,"_blank");
   showToast("📲 Comprobante guardado y WhatsApp abierto");
 };
@@ -1074,12 +1072,11 @@ window.cerrarModal=function(e,force){if(force||(e&&e.target===document.getElemen
 window.togglePago=async function(key){
   if(!adminLogged)return;
   const prev=cachedData[key]||{};
-  const ahora=Date.now();
-  await update(ref(db,`quiniela_16vos2/participantes/${key}`),{
-    pagado:!prev.pagado,
-    pagoTs:!prev.pagado?ahora:null
-  });
-  showToast(!prev.pagado?"✅ Marcado como pagado":"⏳ Marcado como pendiente");
+  try{
+    await postAction({action:"togglePago", key});
+    await fetchState();
+    showToast(!prev.pagado?"✅ Marcado como pagado":"⏳ Marcado como pendiente");
+  }catch(e){ showToast("❌ Error: "+e.message,"error"); }
 };
 
 // ── TABLA CLASIFICACIÓN ───────────────────────────────────────
@@ -1117,12 +1114,7 @@ function renderPicks(){
   ks.sort((a,b)=>(cachedData[b].aciertos||0)-(cachedData[a].aciertos||0)||(cachedData[a].ts||0)-(cachedData[b].ts||0));
   const miNombre=document.getElementById("nombre").value.trim();
   const miKey=miNombre.replace(/[.#$\[\]/]/g,"_");
-  let h=`<table class="picks-table"><thead><tr><th class="th-name" rowspan="2">Participante</th>`;
-  GRUPOS.forEach(g=>{
-    h+=`<th colspan="${g.partidos.length}" style="text-align:center;border-left:1px solid var(--border);color:var(--gold);font-size:10px">G${g.letra}<br><span style="font-size:9px;color:var(--muted);font-family:Rajdhani,sans-serif">${g.fecha.split(" ").slice(0,2).join(" ")}</span></th>`;
-  });
-  h+=`<th rowspan="2" style="text-align:center;border-left:2px solid var(--border)">Pts</th>`;
-  h+=`<th rowspan="2" style="text-align:center">Pago</th></tr><tr>`;
+  let h=`<table class="picks-table"><thead><tr><th class="th-name">Participante</th>`;
   allPartidos.forEach((p,i)=>{
     const strip=s=>s.replace(/\s[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]|\s🏴[\uDB40\uDC67][\uDB40\uDC62][\uDB40-\uDBFF][\uDC00-\uDFFF][\uDB40-\uDBFF][\uDC00-\uDFFF][\uDB40\uDC7F]/g,"").split("*")[0].split(" ")[0].slice(0,6);
     const loc=strip(p.local),vis=strip(p.visita);
@@ -1130,7 +1122,8 @@ function renderPicks(){
     const col=res==="L"?"var(--green)":res==="E"?"#64748b":res==="V"?"var(--blue)":"var(--muted)";
     h+=`<th class="th-partido" style="${i%2===0?"border-left:1px solid rgba(30,48,96,0.6)":""}" title="${i+1}. ${p.local} vs ${p.visita} · ${p.hora}mx">${loc}<br><span style="color:#4a6080;font-size:8px">vs</span><br>${vis}<br><span style="font-size:8px;color:${col}">${res||"#"+String(i+1)}</span></th>`;
   });
-  h+=`</tr></thead><tbody>`;
+  h+=`<th style="text-align:center;border-left:2px solid var(--border)">Pts</th>`;
+  h+=`<th style="text-align:center">Pago</th></tr></thead><tbody>`;
   ks.forEach((k,ni)=>{
     const d=cachedData[k],picks=d.picks||[];
     const rc=ni===0?"r1":ni===1?"r2":ni===2?"r3":"";
@@ -1205,7 +1198,7 @@ window.exportarCSV=function(){
   const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
-  a.href=url; a.download="quiniela_16vos2.csv"; a.click();
+  a.href=url; a.download="quiniela_8vos.csv"; a.click();
   URL.revokeObjectURL(url);
   showToast("📥 CSV descargado");
 };
@@ -1236,27 +1229,24 @@ window.toggleResLocal=function(idx,val,el){
   if(resLocal[idx])el.classList.add("active");
 };
 window.guardarResultados=async function(){
-  try{await set(refR,resLocal);showToast("⚡ Resultados guardados para todos");}
+  try{
+    await postAction({action:"guardarResultados", resultados:resLocal});
+    await fetchState();
+    showToast("⚡ Resultados guardados para todos");
+  }
   catch(e){showToast("❌ Error: "+e.message,"error");}
 };
-async function recalcularAciertos(){
-  for(const k of Object.keys(cachedData)){
-    const picks=cachedData[k].picks||[];
-    let ac=0;
-    picks.forEach((p,i)=>{if(cachedRes[i]&&p===cachedRes[i])ac++;});
-    if(cachedData[k].aciertos!==ac){
-      cachedData[k].aciertos=ac;
-      try{await update(ref(db,`quiniela_16vos2/participantes/${k}`),{aciertos:ac});}catch(e){}
-    }
-  }
-}
+// Nota: los aciertos ahora se calculan en el backend (Apps Script) al leer el estado,
+// así que ya no hace falta recalcularlos ni guardarlos manualmente aquí.
 window.borrarP=async function(k){
   if(!confirm(`¿Borrar la quiniela de "${cachedData[k]?.nombre||k}"?`))return;
-  await remove(ref(db,`quiniela_16vos2/participantes/${k}`));showToast("🗑️ Borrado");
+  try{ await postAction({action:"borrarParticipante", key:k}); await fetchState(); showToast("🗑️ Borrado"); }
+  catch(e){ showToast("❌ Error: "+e.message,"error"); }
 };
 window.borrarTodo=async function(){
   if(!confirm("¿Borrar TODOS los datos?"))return;
-  await remove(ref(db,"quiniela_16vos2"));showToast("🗑️ Datos borrados");
+  try{ await postAction({action:"borrarTodo"}); await fetchState(); showToast("🗑️ Datos borrados"); }
+  catch(e){ showToast("❌ Error: "+e.message,"error"); }
 };
 
 
@@ -1272,7 +1262,7 @@ function renderAdminPartidosForm(){
   if(!form) return;
   if(partidosLocales.length === 0){
     // Inicializar con 16 filas vacías
-    for(let i=0;i<16;i++) partidosLocales.push({local:"",visita:"",hora:"",fecha:""});
+    for(let i=0;i<8;i++) partidosLocales.push({local:"",visita:"",hora:"",fecha:""});
   }
   let html = "";
   partidosLocales.forEach((p,i)=>{
@@ -1300,8 +1290,8 @@ window.delPartido = function(i){
 window.limpiarPartidos = async function(){
   if(!confirm("¿Borrar todos los partidos? Los usuarios verán pantalla de espera."))return;
   partidosLocales=[];
-  await set(refP,[]);
-  showToast("🗑️ Partidos borrados");
+  try{ await postAction({action:"limpiarPartidos"}); await fetchState(); showToast("🗑️ Partidos borrados"); }
+  catch(e){ showToast("❌ Error: "+e.message,"error"); }
 };
 window.guardarPartidos = async function(){
   const validos = partidosLocales.filter(p=>p.local.trim()&&p.visita.trim());
@@ -1311,7 +1301,8 @@ window.guardarPartidos = async function(){
     if(!confirm(`${incompletos.length} partido(s) sin hora/fecha. ¿Guardar igual?`))return;
   }
   try{
-    await set(refP, validos);
+    await postAction({action:"guardarPartidos", partidos:validos});
+    await fetchState();
     showToast(`✅ ${validos.length} partido(s) guardado(s) para todos`);
   }catch(e){showToast("❌ Error: "+e.message,"error");}
 };
