@@ -642,6 +642,13 @@ window.compartirWA = function(){
 function renderPartidos(){
   if(!allPartidos.length) return;
   const cont = document.getElementById("partidos");
+  // Capturar las selecciones actuales del usuario ANTES de reconstruir el HTML,
+  // para no perderlas cuando llega el auto-refresco (fetchState cada 15s).
+  const misPicksActuales = [];
+  for(let i=0;i<allPartidos.length;i++){
+    const sel = document.querySelector(`input[name="m${i}"]:checked`);
+    misPicksActuales[i] = sel ? sel.value : "";
+  }
   // Agrupar por fecha
   const grupos = {};
   const ordenFecha = [];
@@ -662,6 +669,7 @@ function renderPartidos(){
       const i = p.globalIdx;
       const res = cachedRes[i]||"";
       const jugado = res !== "";
+      const pickPrevio = misPicksActuales[i] || "";
       html += `<div class="match${jugado?" jugado":""}" id="match-${i}">
         <span class="match-num">${i+1}</span>
         <span class="match-hora">${p.hora||""} mx</span>
@@ -669,9 +677,9 @@ function renderPartidos(){
           ${jugado?`<span class="match-resultado ${res}">${res}</span><span class="jugado-badge">🔒</span>`:""}
         </span>
         <div class="opts">
-          <label><input type="radio" name="m${i}" value="L" onchange="onPickChange()"><span class="btn-opt L">L</span></label>
-          <label><input type="radio" name="m${i}" value="E" onchange="onPickChange()"><span class="btn-opt E">E</span></label>
-          <label><input type="radio" name="m${i}" value="V" onchange="onPickChange()"><span class="btn-opt V">V</span></label>
+          <label><input type="radio" name="m${i}" value="L" ${pickPrevio==="L"?"checked":""} onchange="onPickChange()"><span class="btn-opt L">L</span></label>
+          <label><input type="radio" name="m${i}" value="E" ${pickPrevio==="E"?"checked":""} onchange="onPickChange()"><span class="btn-opt E">E</span></label>
+          <label><input type="radio" name="m${i}" value="V" ${pickPrevio==="V"?"checked":""} onchange="onPickChange()"><span class="btn-opt V">V</span></label>
         </div>
       </div>
       <div class="match-stats-wrap" id="stats-${i}"></div>`;
